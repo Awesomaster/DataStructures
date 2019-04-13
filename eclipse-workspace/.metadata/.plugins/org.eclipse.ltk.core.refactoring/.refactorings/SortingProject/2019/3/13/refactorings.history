@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;SortTest.java&apos; to &apos;ListLinked/src/(default package)&apos;&#x0D;&#x0A;- Original project: &apos;SortingProject&apos;&#x0D;&#x0A;- Destination element: &apos;ListLinked/src/(default package)&apos;&#x0D;&#x0A;- Original element: &apos;SortTest.java&apos;" description="Copy compilation unit" destination="=ListLinked/src&lt;" element1="/src&lt;{SortTest.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1553418102609" units="1" version="1.0"/>
+</session>

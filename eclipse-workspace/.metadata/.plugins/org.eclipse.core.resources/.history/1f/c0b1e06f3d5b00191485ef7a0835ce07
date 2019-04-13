@@ -1,0 +1,89 @@
+import java.util.Queue;
+
+import CITS2200.BinaryTree;
+import CITS2200.Iterator;
+import CITS2200.OutOfBounds;
+import CITS2200.Underflow;
+
+public class BinTree<A> extends BinaryTree<A> {
+	
+	public BinTree() {
+		super();
+	}
+	
+	public BinTree(A item, BinaryTree<A> b1, BinaryTree<A> b2) {
+		super(item, b1, b2);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return false;
+	}
+
+	@Override
+	public Iterator<A> iterator() {
+		// TODO Auto-generated method stub
+		return new BasicTreeIterator();
+	}
+	
+	private class BasicTreeIterator implements Iterator<A> {
+		private Queue<A> queue;
+		private BinaryTree<A> leftBinary;
+		private BinaryTree<A> rightBinary;
+		
+		private BasicTreeIterator() {
+			
+		}
+		
+		@Override
+		public boolean hasNext() {
+			if (isEmpty()) {
+				return false;
+			}
+			
+			try {
+				if (getLeft() == null) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (Underflow a) {
+				try {
+					if (getRight() == null) {
+						return true;
+					} else {
+						return false;
+					}
+				} catch (Underflow b) {
+					return false;
+				}
+			}
+		}
+
+		@Override
+		public A next() throws OutOfBounds {
+			A item = leftBinary.getItem();
+			if (hasNext()) {
+				leftBinary.getLeft();
+			}
+			return item;
+			/**if (hasNext()) {
+				try {
+					if (getLeft() != null) {
+						getLeft().iterator().next();
+					}
+				} catch (Underflow a) {}
+				
+				try {
+					if (getRight() != null) {
+						getRight().iterator().next();
+					}
+				} catch (Underflow a) {}
+				
+				return (A) getItem();
+			} else {
+				throw new OutOfBounds("There is no next");
+			}**/
+		}
+	}
+}

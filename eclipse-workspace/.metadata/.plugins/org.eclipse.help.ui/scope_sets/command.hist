@@ -1,0 +1,4 @@
+#Mon Apr 01 23:02:06 AWST 2019
+__DEFAULT__=false
+org.eclipse.help.ui.localSearch.master=true
+expression=command

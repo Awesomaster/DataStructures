@@ -1,0 +1,36 @@
+import java.nio.ByteBuffer;
+
+public class Block implements BlockInterface {
+	public long nonce;
+	public long timestamp;
+	private Object data;
+	public byte[] previousHash;
+	public byte[] hash;
+		
+	public Block(long t, Object d) {
+		nonce = 0;
+		timestamp = t;
+		data = d;
+		previousHash = new byte[0];
+		hash = calculateHash();
+	}
+	
+	@Override
+	public byte[] calculateHash() {
+		// TODO Auto-generated method stub
+		byte[] newHash = new HashGen(nonce, timestamp, data, previousHash).getHash();
+		return newHash;
+	}
+	
+	public void mineBlock(int difficultyLevel) {
+		int complexity = 1;
+		for (int i = 0; i < difficultyLevel; i++) {
+			complexity = complexity*10;
+		}
+		while ((ByteBuffer.wrap(hash).getLong() % complexity) != 0) {
+			nonce++;
+			hash = calculateHash();
+		}
+		System.out.println(ByteBuffer.wrap(hash).getLong());
+	}
+}

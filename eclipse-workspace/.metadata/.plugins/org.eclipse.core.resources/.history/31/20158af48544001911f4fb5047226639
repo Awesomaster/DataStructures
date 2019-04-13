@@ -1,0 +1,42 @@
+import CITS2200.Overflow;
+import CITS2200.Stack;
+import CITS2200.Underflow;
+
+public class StackBlock implements Stack {
+	
+	public StackBlock() {
+		
+	}
+
+	/**
+	 * 
+	 */
+	public Object examine() throws Underflow {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 
+	 */
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 * 
+	 */
+	public Object pop() throws Underflow {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 
+	 */
+	public void push(Object arg0) throws Overflow {
+		// TODO Auto-generated method stub
+		
+	}
+}

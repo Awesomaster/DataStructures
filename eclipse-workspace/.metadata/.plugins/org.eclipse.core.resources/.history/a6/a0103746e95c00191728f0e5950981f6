@@ -1,0 +1,96 @@
+import CITS2200.BinaryTree;
+import CITS2200.Iterator;
+import CITS2200.OutOfBounds;
+import CITS2200.WindowLinked;
+
+public class BinTree<A> extends BinaryTree<A> {
+	
+	public BinTree() {
+		super();
+	}
+	
+	public BinTree(A item, BinaryTree<A> b1, BinaryTree<A> b2) {
+		super(item, b1, b2);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof BinaryTree) {
+			ListLinked listyO = new ListLinked();
+			ListLinked listyMe = new ListLinked();
+			WindowLinked wO = new WindowLinked();
+			listyMe.beforeFirst(wO);
+			WindowLinked wMe = new WindowLinked();
+			listyO.beforeFirst(wMe);
+			Iterator<A> myIterator = iterator();
+			Iterator<A> theirIterator = ((BinaryTree<A>) o).iterator();
+			while(myIterator.hasNext()) {
+				listyMe.insertAfter(myIterator.next(),wMe);
+			}
+			while(theirIterator.hasNext()) {
+				listyO.insertAfter(theirIterator.next(),wO);
+			}
+			while(!listyO.isEmpty()) {
+				listyO.next(wO);
+				listyMe.next(wMe);
+				Object currentMe = listyMe.examine(wMe);
+				Object currentO = listyO.examine(wO);
+				if(!currentMe.equals(currentO)) {
+					return false;
+				}
+			}
+			if (listyMe.isEmpty()) {
+				return true;
+			} else {
+				return false;
+			}
+			return true;
+		}
+		return false;
+		
+		//return o instanceof BinaryTree<?> && ((BinaryTree<A>) o).toString().equals(toString());
+	}
+
+	@Override
+	public Iterator<A> iterator() {
+		// TODO Auto-generated method stub
+		return new BasicTreeIterator();
+	}
+	
+	private class BasicTreeIterator implements Iterator<A> {
+		private ListLinked listy;
+		private WindowLinked w;
+		
+		private BasicTreeIterator() {
+			w = new WindowLinked();
+			listy = new ListLinked();
+			listy.beforeFirst(w);
+			listy.insertAfter(new BinTree<A>(getItem(), getLeft(), getRight()), w);
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return !listy.isEmpty();
+		}
+
+		@Override
+		public A next() throws OutOfBounds {
+			listy.beforeFirst(w);
+			listy.next(w);
+			BinaryTree<A> bin = (BinaryTree<A>) listy.delete(w);
+			listy.beforeFirst(w);
+			try {
+				if (!bin.getLeft().isEmpty()) {
+					listy.insertAfter(bin.getLeft(), w);
+				}
+				if (!bin.getRight().isEmpty()) {
+					listy.insertAfter(bin.getRight(), w);
+				}
+				listy.beforeFirst(w);
+				return bin.getItem();
+			} catch (OutOfBounds a) {
+				throw new OutOfBounds("OOB");
+			}
+		}
+	}
+}

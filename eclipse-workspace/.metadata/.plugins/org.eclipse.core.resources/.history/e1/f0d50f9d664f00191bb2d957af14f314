@@ -1,0 +1,6 @@
+import CITS2200.BinaryTree; 
+import CITS2200.Iterator;
+
+public class BinTree implements BinaryTree {
+
+}

@@ -1,0 +1,15 @@
+import java.nio.ByteBuffer;
+
+public class Main {
+	public static void main(String[] args) {
+		BlockChain notCoins = new BlockChain();
+		System.out.println(ByteBuffer.wrap(notCoins.getLastestBlock().hash).getLong());
+		System.out.println("Mining Block 1");
+		notCoins.addBlock(new Block(29032019, "something more complicated"));
+		System.out.println(ByteBuffer.wrap(notCoins.getLastestBlock().hash).getLong());
+		notCoins.addBlock(new Block(31032019, "m8"));
+		System.out.println(ByteBuffer.wrap(notCoins.getLastestBlock().hash).getLong());
+		notCoins.addBlock(new Block(11042019, 9401));
+		System.out.println(ByteBuffer.wrap(notCoins.getLastestBlock().hash).getLong());
+	}
+}

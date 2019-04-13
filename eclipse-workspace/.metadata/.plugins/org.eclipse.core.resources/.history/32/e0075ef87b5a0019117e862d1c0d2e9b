@@ -1,0 +1,70 @@
+import CITS2200.BinaryTree;
+import CITS2200.WindowLinked;
+import CITS2200.Iterator;
+import CITS2200.OutOfBounds;
+
+public class BinTree<A> extends BinaryTree<A> {
+
+	public BinTree() {
+		super();
+	}
+	
+	public BinTree(A item, BinaryTree<A> b1, BinaryTree<A> b2) {
+		super(item, b1, b2);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Iterator<A> iterator() {
+		// TODO Auto-generated method stub
+		return new BasicTreeIterator();
+	}
+	
+	private class BasicTreeIterator implements Iterator<A> {
+		private BinaryTree<A> tree;
+				
+		private BasicTreeIterator() {
+			
+		}
+		
+		@Override
+		public boolean hasNext() {
+			if (tree.getLeft() != null && tree.getRight() != null) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		@Override
+		public A next() throws OutOfBounds {
+			// TODO Auto-generated method stub
+			if (hasNext()) {
+				if (tree.getItem()!= null) {
+					if (tree.getLeft().getItem() != null) {
+						tree = tree.getLeft();
+						next();
+						return tree.getLeft().getItem();
+					}
+					if (tree.getLeft().getItem() != null) {
+						tree = tree.getRight();
+						next();
+						return tree.getRight().getItem();
+					}
+					// tree.getLeft.getItem or tree.getRight.getItem are null
+					return null;
+				} else {
+					// tree.getItem() is null
+					return null;
+				}
+			} else {
+				throw new OutOfBounds("There is no next");
+			}
+		}
+	}
+}

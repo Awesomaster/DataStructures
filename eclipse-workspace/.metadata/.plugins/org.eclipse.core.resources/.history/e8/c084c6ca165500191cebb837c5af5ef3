@@ -1,0 +1,13 @@
+
+public class Transaction implements Serializable {
+	public String from;
+	public String to;
+	public String amount;
+	
+	public Transaction(String f, String t, long a) {
+		from = f;
+		to = t;
+		amount = String.valueOf(a);
+	}
+	
+}

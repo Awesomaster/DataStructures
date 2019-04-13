@@ -1,0 +1,133 @@
+/** 
+ * Written by Josh Collier, 2019.
+ */
+
+import java.util.Random;
+import java.util.stream.IntStream;
+
+import CITS2200.ListLinked;
+import CITS2200.WindowLinked;
+
+public class ListLinkedTest
+{
+	/** Prints usage and terminates program */
+	public static void usage() {
+		System.out.println("Usage:");
+		System.out.println("e.g. For testing a random list:");
+		System.out.println("  java ListLinked");
+		System.exit(1);
+	}
+
+	/** Prints error message and terminates program */
+	public static void pperr(String msg) {
+		System.out.println("Error:");
+		System.out.println(msg);
+		System.exit(1);
+	}
+
+
+	/** Method for testing a given array of long integers for debugging.
+	 *  @param a the array of longs to be sorted.
+	 */
+	public static void testMain(ListLinked list, WindowLinked w, Object[] oArr)
+	{
+		// print contents of array a before sorting
+		System.out.println("Starting list operations");
+		list.beforeFirst(w);
+		System.out.println("1. beforeFirst(w)");
+		
+		int n = 1;
+		Random rand = new Random();
+		
+		switch (rand.nextInt(12)) {
+			case 0:
+				System.out.print(n + ") afterLast(w); ");
+				list.afterLast(w);
+				System.out.println("Set window pos to 'after'");
+				break;
+			case 1:
+				System.out.print(n + ") beforeFirst(w); ");
+				list.beforeFirst(w);
+				System.out.println("Set window pos to 'before'");
+				break;
+			case 2:
+				System.out.print(n + ") delete(w); ");
+				list.delete(w);
+				System.out.println("Deleted the current w");
+				break;
+			case 3:
+				System.out.print(n + ") examine(w); ");
+				System.out.println("Examined: " + list.examine(w));
+				break;
+			case 4:
+				int after = rand.nextInt(7);
+				System.out.print(n + ") insertAfter(o, w)");
+				list.insertAfter(oArr[after], w);
+				System.out.println("Placing " + oArr[after] + " after w");
+				break;
+			case 5:
+				int before = rand.nextInt(7);
+				System.out.print(n + ") insertBefore(o, w)");
+				list.insertBefore(oArr[before], w);
+				System.out.println("Placing " + oArr[before] + " before w");
+				break;
+			case 6:
+				System.out.print(n + ") isAfterLast(w)");
+				System.out.println("Is the window after last? " + list.isAfterLast(w));
+				break;
+			case 7:
+				System.out.print(n + ") isBeforeAfter(w)");
+				System.out.println("Is the window before first? " + list.isAfterLast(w));
+				break;
+			case 8:
+				System.out.print(n + ") isEmpty()");
+				System.out.println("Is the window before first? " + list.isEmpty());
+				break;
+			case 9:
+				System.out.print(n + ") next(w)");
+				list.next(w);
+				System.out.println("We went next");
+			case 10:
+				System.out.print(n + ") previous(w)");
+				list.previous(w);
+				System.out.println("We went to previous");
+			case 11:
+				list.replace(o, arg1);
+				int replaced = rand.nextInt(7);
+				System.out.print(n + ") replace(o, w)");
+				
+				System.out.println("Replacing " + list.replace(oArr[replaced], w) + " with " + oArr[before]);
+		}
+		
+		list.insertBefore(oArr[0], w);
+
+	}
+
+	/** Method for testing an array of randomly generated
+	 *  long integers.
+	 *  @arg size the length of the array to be generated.
+	 */
+	public static void runMain(int size) {
+		ListLinked list = new ListLinked();
+		WindowLinked w = new WindowLinked();
+		Object a = new Object();
+		Object b = new Object();
+		Object c = new Object();
+		Object d = new Object();
+		Object e = new Object();
+		Object f = new Object();
+		Object g = new Object();
+		Object[] oArr = {a,b,c,d,e,f,g};
+		
+		testMain(list, w, oArr);
+	}
+
+	public static void main(String[] args)
+	{
+		if (args.length!=0) {
+			usage();
+		} else {
+			runMain();
+		}
+	}
+}

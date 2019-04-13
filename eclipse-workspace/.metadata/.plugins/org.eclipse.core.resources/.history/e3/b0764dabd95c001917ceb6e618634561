@@ -1,0 +1,7 @@
+
+
+public class BinTreeTest {
+	public static void main(String[] args) {
+		BinTree tree = new BinTree();
+	}
+}

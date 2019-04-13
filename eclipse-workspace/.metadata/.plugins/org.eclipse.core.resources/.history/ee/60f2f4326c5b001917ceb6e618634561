@@ -1,0 +1,47 @@
+import CITS2200.Link;
+import CITS2200.Queue;
+import CITS2200.Underflow;
+
+public class DequeCyclicLinked implements Queue {
+	DoubleEndedLink queue;
+	
+	public DequeCyclicLinked() {
+		queue = new DoubleEndedLink(null, null, null);
+	}
+	
+	private class DoubleEndedLink {
+		public DoubleEndedLink before;
+		public DoubleEndedLink after;
+		public Object obj;
+		
+		public DoubleEndedLink(Object o, DoubleEndedLink b, DoubleEndedLink a) {
+			obj = o;
+			before = b;
+			after = a;
+		}
+	}
+	
+	@Override
+	public Object dequeue() throws Underflow {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void enqueue(Object arg0) {
+		
+	}
+
+	@Override
+	public Object examine() throws Underflow {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

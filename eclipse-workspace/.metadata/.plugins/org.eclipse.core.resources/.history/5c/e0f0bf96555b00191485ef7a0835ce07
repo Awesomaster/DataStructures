@@ -1,0 +1,97 @@
+import CITS2200.BinaryTree;
+import CITS2200.Iterator;
+import CITS2200.OutOfBounds;
+
+public class BinTree<A> extends BinaryTree<A> {
+	
+	public BinTree() {
+		super();
+	}
+	
+	public BinTree(A item, BinaryTree<A> b1, BinaryTree<A> b2) {
+		super(item, b1, b2);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return false;
+	}
+
+	@Override
+	public Iterator<A> iterator() {
+		// TODO Auto-generated method stub
+		return new BasicTreeIterator();
+	}
+	
+	private class BasicTreeIterator implements Iterator<A> {
+		private ListLinked listy;
+		
+		private BasicTreeIterator() {
+			listy = new ListLinked();
+			listy.add(new BinTree<A>(getItem(), getLeft(), getRight()));
+			while(hasNext()) {
+				next();
+			}
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return !queue.isEmpty();
+			/**
+			if (binary.isEmpty()) {
+				return false;
+			}
+			
+			try {
+				if (binary.getLeft() == null) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (Underflow a) {
+				try {
+					if (binary.getRight() == null) {
+						return true;
+					} else {
+						return false;
+					}
+				} catch (Underflow b) {
+					return false;
+				}
+			}**/
+		}
+
+		@Override
+		public A next() throws OutOfBounds {
+			BinaryTree<A> bin = queue.poll();
+			try {
+				if (!bin.getLeft().isEmpty()) {
+					queue.add(bin.getLeft());
+				}
+				if (!bin.getRight().isEmpty()) {
+					queue.add(bin.getRight());
+				}
+				return bin.getItem();
+			} catch (OutOfBounds a) {
+				throw new OutOfBounds("OOB");
+			}
+			/**if (hasNext()) {
+				try {
+					if (getLeft() != null) {
+						getLeft().iterator().next();
+					}
+				} catch (Underflow a) {}
+				
+				try {
+					if (getRight() != null) {
+						getRight().iterator().next();
+					}
+				} catch (Underflow a) {}
+				
+				return (A) getItem();
+			} else {
+				throw new OutOfBounds("There is no next");
+			}**/
+		}
+	}
+}

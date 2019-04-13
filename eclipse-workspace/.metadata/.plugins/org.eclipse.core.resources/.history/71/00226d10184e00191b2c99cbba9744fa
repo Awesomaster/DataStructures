@@ -1,0 +1,75 @@
+/** 
+ * Written by Josh Collier, 2019.
+ */
+
+import java.util.Random;
+import CITS2200.ListLinked;
+import CITS2200.WindowLinked;
+
+public class ListLinkedTest
+{
+	/** Prints usage and terminates program */
+	public static void usage() {
+		System.out.println("Usage:");
+		System.out.println("e.g. For testing a random list:");
+		System.out.println("  java ListLinked");
+		System.exit(1);
+	}
+
+	/** Prints error message and terminates program */
+	public static void pperr(String msg) {
+		System.out.println("Error:");
+		System.out.println(msg);
+		System.exit(1);
+	}
+
+
+	/** Method for testing a given array of long integers for debugging.
+	 *  @param a the array of longs to be sorted.
+	 */
+	public static void testMain(ListLinked list, WindowLinked w, Object[] oArr)
+	{
+		// print contents of array a before sorting
+		System.out.println("Starting list operations");
+		list.beforeFirst(w);
+		System.out.println("1. beforeFirst(w)");
+		
+		Random rand = new Random();
+		rand.ints(0, 7);
+		
+		switch (rand.ints(0,7)) {
+			
+		}
+		
+		list.insertBefore(oArr[0], w);
+
+	}
+
+	/** Method for testing an array of randomly generated
+	 *  long integers.
+	 *  @arg size the length of the array to be generated.
+	 */
+	public static void runMain(int size) {
+		ListLinked list = new ListLinked();
+		WindowLinked w = new WindowLinked();
+		Object a = new Object();
+		Object b = new Object();
+		Object c = new Object();
+		Object d = new Object();
+		Object e = new Object();
+		Object f = new Object();
+		Object g = new Object();
+		Object[] oArr = {a,b,c,d,e,f,g};
+		
+		testMain(list, w, oArr);
+	}
+
+	public static void main(String[] args)
+	{
+		if (args.length!=0) {
+			usage();
+		} else {
+			runMain();
+		}
+	}
+}

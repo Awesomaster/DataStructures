@@ -1,0 +1,46 @@
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Date;
+
+public class Block implements Serializable{
+	public long nonce;
+	public long timestamp;
+	public byte[] previousHash;
+	public byte[] hash;
+	public int miningReward;
+	private ArrayList<Transaction> trades;
+	
+	public Block(ArrayList<Transaction> trans) {
+		nonce = 0;
+		timestamp = new Date().getTime();
+		previousHash = new byte[0];
+		setTrades(trans);
+		miningReward = 100;
+		hash = calculateHash();
+	}
+	
+	public ArrayList<Transaction> getTrades() {
+		return trades;
+	}
+
+	public void setTrades(ArrayList<Transaction> trades) {
+		this.trades = trades;
+	}
+
+	public byte[] calculateHash() {
+		byte[] newHash = new HashGen(nonce, timestamp, getTrades(), previousHash).createHash();
+		return newHash;
+	}
+	
+	public void mineBlock(int difficultyLevel) {
+		int complexity = 1;
+		for (int i = 0; i < difficultyLevel; i++) {
+			complexity = complexity*10;
+		}
+		hash = calculateHash();
+		while ((ByteBuffer.wrap(hash).getLong() % complexity) != 0) {
+			nonce++;
+			hash = calculateHash();
+		}
+	}
+}

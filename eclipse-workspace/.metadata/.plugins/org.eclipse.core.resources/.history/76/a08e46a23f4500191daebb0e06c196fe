@@ -1,0 +1,47 @@
+import CITS2200.Overflow;
+import CITS2200.Stack;
+import CITS2200.Underflow;
+
+public class StackBlock implements Stack {
+	Object[] stack;
+	int size;
+	
+	/**
+	 * An array that we have taken some functionality from so that it acts as a stack to the user.
+	 * @param s size of StackBlock
+	 */
+	public StackBlock(int s) {
+		stack = new Object[s];
+		size = s;
+	}
+
+	/**
+	 * A function that looks at the top element of the stack, and throws an exception if the stack is empty
+	 */
+	public Object examine() throws Underflow {
+		if (isEmpty()) {
+			throw new Underflow("The stack is empty and thus you cannot examine anything");
+		} else {
+			return stack[size];
+		}
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Object pop() throws Underflow {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void push(Object arg0) throws Overflow {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

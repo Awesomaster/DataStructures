@@ -1,0 +1,112 @@
+import CITS2200.BinaryTree;
+import CITS2200.Iterator;
+import CITS2200.OutOfBounds;
+import CITS2200.WindowLinked;
+
+public class BinTree<A> extends BinaryTree<A> {
+	
+	public BinTree() {
+		super();
+	}
+	
+	public BinTree(A item, BinaryTree<A> b1, BinaryTree<A> b2) {
+		super(item, b1, b2);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof BinaryTree) {
+			Iterator<A> myIterator = iterator();
+			Iterator<A> theirIterator = iterator();
+			while(iterator().hasNext()) {
+				if(((BinaryTree<A>) o).iterator().next()!=iterator().next()) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Iterator<A> iterator() {
+		// TODO Auto-generated method stub
+		return new BasicTreeIterator();
+	}
+	
+	private class BasicTreeIterator implements Iterator<A> {
+		private ListLinked listy;
+		private WindowLinked w;
+		
+		private BasicTreeIterator() {
+			w = new WindowLinked();
+			listy = new ListLinked();
+			listy.beforeFirst(w);
+			listy.insertAfter(new BinTree<A>(getItem(), getLeft(), getRight()), w);
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return !listy.isEmpty();
+			/**
+			if (binary.isEmpty()) {
+				return false;
+			}
+			
+			try {
+				if (binary.getLeft() == null) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (Underflow a) {
+				try {
+					if (binary.getRight() == null) {
+						return true;
+					} else {
+						return false;
+					}
+				} catch (Underflow b) {
+					return false;
+				}
+			}**/
+		}
+
+		@Override
+		public A next() throws OutOfBounds {
+			listy.beforeFirst(w);
+			listy.next(w);
+			BinaryTree<A> bin = (BinaryTree<A>) listy.delete(w);
+			listy.beforeFirst(w);
+			try {
+				if (!bin.getLeft().isEmpty()) {
+					listy.insertAfter(bin.getLeft(), w);
+				}
+				if (!bin.getRight().isEmpty()) {
+					listy.insertAfter(bin.getRight(), w);
+				}
+				listy.beforeFirst(w);
+				return bin.getItem();
+			} catch (OutOfBounds a) {
+				throw new OutOfBounds("OOB");
+			}
+			/**if (hasNext()) {
+				try {
+					if (getLeft() != null) {
+						getLeft().iterator().next();
+					}
+				} catch (Underflow a) {}
+				
+				try {
+					if (getRight() != null) {
+						getRight().iterator().next();
+					}
+				} catch (Underflow a) {}
+				
+				return (A) getItem();
+			} else {
+				throw new OutOfBounds("There is no next");
+			}**/
+		}
+	}
+}

@@ -1,0 +1,40 @@
+import java.nio.ByteBuffer;
+
+public class Block implements BlockInterface {
+	public long index;
+	public long timestamp;
+	private Object data;
+	public byte[] previousHash;
+	public byte[] hash;
+		
+	public Block(long i, long t, Object d) {
+		index = i;
+		timestamp = t;
+		data = d;
+		previousHash = new byte[0];
+		hash = calculateHash();
+	}
+	
+	@Override
+	public byte[] calculateHash() {
+		// TODO Auto-generated method stub
+		byte[] newHash = new HashGen(index, timestamp, data, previousHash).getHash();
+		return newHash;
+	}
+	
+	public void proofOfOWork(int n) {
+		int complexity = 1;
+		for (int i = 0; i < n; i++) {
+			complexity = complexity*10;
+		}
+		while (true) {
+			if ((ByteBuffer.wrap(hash).getLong() % complexity) == 0) {
+				return true;
+			} else {
+				index++;
+				calculateHash();
+			}
+		}
+	}
+
+}

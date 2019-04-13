@@ -1,0 +1,23 @@
+import CITS2200.BinaryTree; 
+import CITS2200.Iterator;
+import CITS2200.OutOfBounds;
+
+public class BinTree implements Iterator {
+
+	@Override
+	public boolean hasNext() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Object next() throws OutOfBounds {
+		if (hasNext()) {
+			//Do
+		} else {
+			throw new OutOfBounds("Does not have next to go to");
+		}
+		return null;
+	}
+
+}

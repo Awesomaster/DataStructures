@@ -1,0 +1,96 @@
+import java.util.ArrayList;
+import java.util.Objects;
+
+public class BlockChain {
+	private ArrayList<Block> chain;
+	private int difficulty;
+	public ArrayList<Transaction> pendingTransactions;
+	
+	public BlockChain(int diff) {
+		difficulty = diff;
+		pendingTransactions = new ArrayList<Transaction>();
+		chain = new ArrayList<Block>();
+		chain.add(createGenesisBlock());
+	}
+	
+	public void print(String str) {
+		System.out.println(str);			
+	}
+	
+	public BlockChain(int diff, ArrayList<Transaction> pending) {
+		difficulty = diff;
+		pendingTransactions = pending;
+		chain = new ArrayList<Block>();
+		chain.add(createGenesisBlock());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Block createGenesisBlock() {
+		print("Creating genesis block with transactions: " + pendingTransactions + "...");
+		Block block = new Block((ArrayList<Transaction>) pendingTransactions.clone());
+		pendingTransactions.removeAll(pendingTransactions);
+		return block;
+	}
+	
+	public Block getLastestBlock() {
+		return chain.get(chain.size()-1);
+	}
+	
+	public void createTransaction(Transaction transaction) {
+		if ((getBalanceOfAddress(transaction.from) >= Long.valueOf(transaction.amount)) || (transaction.from == null) || (transaction.from == "")) {
+			print("Adding transaction: " + transaction + ".");			
+			pendingTransactions.add(transaction);
+		} else {
+			print("This transaction is not valid and has thus not occurred.");
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void minePendingTransactions(String yourAddress) {
+		print("Creating block with transactions: " + pendingTransactions + "...");
+		Block block = new Block((ArrayList<Transaction>) pendingTransactions.clone());
+		block.mineBlock(difficulty);
+		print("Block successfully mined!");
+		chain.add(block);
+		pendingTransactions.removeAll(pendingTransactions);
+		createTransaction(new Transaction(null, yourAddress, block.miningReward));
+	}
+	
+	public long getBalanceOfAddress(String yourAddress) {
+		long balance = 0;
+		for (int i = 0; i < chain.size(); i++) {
+			for (int j = 0; j < chain.get(i).getTrades().size(); j++) {
+				if (Objects.equals(yourAddress,chain.get(i).getTrades().get(j).from)) {
+					balance -= Long.valueOf(chain.get(i).getTrades().get(j).amount);
+				} else if (Objects.equals(yourAddress,chain.get(i).getTrades().get(j).to)) {
+					balance += Long.valueOf(chain.get(i).getTrades().get(j).amount);
+				}
+			}
+		}
+		return balance;
+	}
+	
+	public boolean isChainValid() {
+		for (int i = 1; i < chain.size(); i++) {
+			Block current = chain.get(i);
+			Block previous = chain.get(i-1);
+			if (current.hash != current.calculateHash()) {
+				return false;
+			}
+			if (current.previousHash != previous.hash) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public String returnChain() {
+		String returnString = "";
+		for (int i = 0; i < chain.size(); i++) {
+			returnString += chain.get(i).hash; + " "
+			
+		}
+		return returnString;
+	}
+	
+}

@@ -1,0 +1,28 @@
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class HashGen {
+	private byte[] hash;
+	
+	public HashGen(long n, long t, Object d, byte[] pH) {
+		String text = d.toString();
+		MessageDigest digest;
+		try {
+			digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(text.getBytes());
+			setHash(hash);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public byte[] getHash() {
+		return hash;
+	}
+	
+	public void setHash(byte[] hash) {
+		this.hash = hash;
+	}
+	
+}

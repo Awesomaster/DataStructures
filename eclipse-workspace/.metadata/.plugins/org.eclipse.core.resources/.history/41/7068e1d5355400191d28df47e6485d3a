@@ -1,0 +1,31 @@
+//import java.util.Date;
+import java.util.Stack;
+
+public class BlockChain implements BlockChainInterface {
+	private Stack<Block> chain;
+	
+	public BlockChain() {
+		chain = new Stack<Block>();
+		chain.push(createGenesisBlock());
+	}
+	
+	@Override
+	public Block createGenesisBlock() {
+		//long time = new Date().getTime();
+		long time = 28032019;
+		return new Block(0, time, "Genesis");
+	}
+	
+	@Override
+	public Block getLastestBlock() {
+		return chain.peek();
+	}
+	
+	@Override
+	public void addBlock(Block newBlock) {
+		newBlock.previousHash = getLastestBlock().hash;
+		newBlock.hash = newBlock.calculateHash();
+		chain.push(newBlock);
+	}
+	
+}
